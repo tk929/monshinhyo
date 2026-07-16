@@ -726,10 +726,11 @@
   }
 
   const GAS_STORAGE_KEY = "izuminoekimae_gas_url";
+  const DEFAULT_GAS_URL = "https://script.google.com/macros/s/AKfycbw0cHoBXqWPioG4ogZ4PpxUBz5jRYaxr4AtXz0n5xAqWjVFA_OJ0-0L_l-CULlHmmqyIA/exec";
 
   function getGasUrl(){
-    try{ return localStorage.getItem(GAS_STORAGE_KEY) || ""; }
-    catch(e){ return ""; }
+    try{ return localStorage.getItem(GAS_STORAGE_KEY) || DEFAULT_GAS_URL; }
+    catch(e){ return DEFAULT_GAS_URL; }
   }
 
   function saveGasUrl(url){
@@ -823,10 +824,10 @@
 
   async function refreshGasStatus(){
     const el = document.getElementById("gasStatus");
-    const url = getGasUrl();
-    el.textContent = url
-      ? "✅ Googleスプレッドシート連携: 設定済み（このブラウザに保存されています）"
-      : "⚪ Googleスプレッドシート連携: 未設定（「スプレッドシート連携設定」から設定してください）";
+    const usingOverride = (function(){ try{ return !!localStorage.getItem(GAS_STORAGE_KEY); }catch(e){ return false; } })();
+    el.textContent = usingOverride
+      ? "✅ Googleスプレッドシート連携: 設定済み（このブラウザ専用のURLを使用中）"
+      : "✅ Googleスプレッドシート連携: 設定済み（ファイルに組み込まれたURLを使用中）";
   }
 
   document.getElementById("btnGasSettings").onclick = () => {
@@ -838,7 +839,7 @@
           <button class="modal-close" id="gasModalClose">×</button>
           <h2 style="font-size:18px;">スプレッドシート連携設定</h2>
           <p style="font-size:12.5px; color:var(--ink-soft); line-height:1.8; margin:10px 0 16px;">
-            Google Apps Script で発行した「ウェブアプリURL」を貼り付けてください。この設定は<strong>このブラウザ（この端末）にのみ</strong>保存されます。問診票を入力する端末・スタッフ一覧を見る端末それぞれで、一度ずつ設定してください。
+            このファイルにはすでにスプレッドシートのURLが組み込まれているため、通常は設定不要です。<strong>Apps ScriptのURLを変更した場合のみ</strong>、新しいURLをここに貼り付けてください（この設定はこのブラウザ・この端末にのみ保存されます）。
           </p>
           <div class="field">
             <label>ウェブアプリURL</label>
