@@ -296,7 +296,7 @@
               </div>
             </div>
 
-            <div class="grid3">
+            <div class="grid2">
               <div class="field">
                 <label>生年月日</label>
                 <div class="birth-inputs">
@@ -311,10 +311,6 @@
               <div class="field">
                 <label>年齢</label>
                 <input type="text" id="f-age" placeholder="自動計算" readonly>
-              </div>
-              <div class="field">
-                <label>来院日</label>
-                <input type="date" id="f-visitdate">
               </div>
             </div>
 
@@ -686,9 +682,6 @@
     return `${y || "----"}年${m || "--"}月${d || "--"}日`;
   }
 
-  // default visit date = today
-  document.getElementById("f-visitdate").value = new Date().toISOString().slice(0,10);
-
   // pregnancy conditional
   document.querySelectorAll('input[name="gender"]').forEach(r => {
     r.addEventListener("change", () => {
@@ -747,7 +740,6 @@
       submittedAt: new Date().toISOString(),
       name, kana: val("f-kana"), birth: getBirthText(), age: val("f-age"),
       gender: genderEl ? genderEl.value : "", tel, address: val("f-address"),
-      visitDate: val("f-visitdate"),
       chief, painLevel: painInput.value, since: val("f-since"), cause: val("f-cause"),
       painAreas: [pinsToText(pins.front), pinsToText(pins.back)].filter(Boolean).join(" / "),
       job: val("f-job"), worktype: worktypeEl ? worktypeEl.value : "",
@@ -845,7 +837,6 @@
     renderAll();
     painVal.textContent = "5";
     document.getElementById("f-age").value = "";
-    document.getElementById("f-visitdate").value = new Date().toISOString().slice(0,10);
     document.getElementById("pregnancyField").style.display = "none";
     form.style.display = "block";
     document.getElementById("confirmScreen").style.display = "none";
@@ -1007,7 +998,7 @@
       card.innerHTML = `
         <div class="record-main">
           <div class="record-name">${escapeHtml(r.name || "（未記入）")}</div>
-          <div class="record-meta">${escapeHtml(r.age||"")} ${escapeHtml(r.gender||"")} ・ 来院日: ${escapeHtml(r.visitDate||"-")}</div>
+          <div class="record-meta">${escapeHtml(r.age||"")} ${escapeHtml(r.gender||"")}</div>
           <div class="record-chief">${escapeHtml((r.chief||"").slice(0,40))}${(r.chief||"").length>40?"…":""}</div>
         </div>
         <div class="record-date">${dtStr}</div>
@@ -1044,7 +1035,6 @@
               <div>電話: ${escapeHtml(r.tel||"-")}</div>
               <div>住所: ${escapeHtml(r.address||"-")}</div>
               <div>生年月日: ${escapeHtml(r.birth||"-")}</div>
-              <div>来院日: ${escapeHtml(r.visitDate||"-")}</div>
             </div>
           </div>
 
