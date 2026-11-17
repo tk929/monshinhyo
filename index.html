@@ -510,7 +510,7 @@
         <div class="confirm-screen" id="confirmScreen" style="display:none;">
           <div class="stamp"><span class="big">受付</span><span class="small">CONFIRMED</span></div>
           <h2>送信ありがとうございました</h2>
-          <p>問診票を受け付けました。LINE友だち追加ページを別タブで開いています。このページはまもなく自動的に予約カレンダーに移動します。</p>
+          <p>問診票を受け付けました。このページはまもなく自動的に予約カレンダーに移動します。</p>
 
           <div class="next-steps">
             <div class="step-title">ご予約までの流れ</div>
@@ -729,7 +729,7 @@
     errBox.style.display = "none";
 
     // ポップアップブロック対策：ボタンが押された直後（非同期処理の前）に空のタブを開いておく
-    const lineTab = window.open("", "_blank");
+    const lineTab = null;
 
     const genderEl = document.querySelector('input[name="gender"]:checked');
     const worktypeEl = document.querySelector('input[name="worktype"]:checked');
